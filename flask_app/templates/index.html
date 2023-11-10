@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="../static/css/utilities.css">
+    <link rel="stylesheet" href="../static/css/style.css">
+    <title>Interlinked</title>
+</head>
+<body>
+    <div class="navbar">
+        <div class="container flex">
+            <h1 class="logo">Interlinked</h1>
+            <nav>
+                <ul>
+                    {% if user.is_authenticated %}
+                    <li><a href="/home">Home</a></li>
+                    <li><a href="/logout">Logout</a></li>
+                    <li><a href="/view-profile/{{user.id}}">View Profile</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+            {% with messages = get_flashed_messages(with_categories=True)%}
+            {% if messages %} 
+            {% for category, m in messages %}
+            <div align="center" class="alert alert-danger alter-dismissible fade show" role="alert">
+                {{m}} 
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>  
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+        </div>
+    </div>
+    <section class="showcase">
+        <div class="container grid">
+            <div class="showcase-text">
+                <h1>Welcome to Interlinked</h1>
+                <p>A hub for interaction and connectivity</p>
+            </div>
+            <div class="showcase-form card">
+                <h2>Login</h2>
+                <form action="/login" method="POST">
+                    <div class="form-control">
+                        <input type="text" name="email" placeholder="Email">
+                    </div>
+                    <div class="form-control">
+                        <input type="password" name="password" placeholder="Password">
+                    </div>
+                    <input type="submit" value="Login" class="btn btn-primary">
+                    <div class="form-control">
+                        <a href="/register">Don't have a account? Get started today!</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+    <section class="stats">
+        <div class="container">
+            <h3 class="stats-heading text-center my-1">
+                Accomplishments? Exciting News? or Even just wanting to share your ideas? You can do so with Interlinked and see what others are saying as well!
+            </h3>
+            <div class="grid grid-3 text-center my-4">
+                <div>
+                    <i class="fa-solid fa-users fa-3x"></i>
+                <h3>37,129</h3>  
+                <p class="text-secondary">
+                    Daily Users
+                </p>              
+                </div>
+                <div>
+                    <i class="fa-solid fa-handshake fa-3x"></i> 
+                <p class="text-secondary">
+                    Meet New People
+                </p>              
+                </div>
+                <div>
+                    <i class="fa-solid fa-earth-americas fa-3x"></i> 
+                <p class="text-secondary">
+                    Used Globally
+                </p>    
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+        <div class="links">
+            <a href="https://www.linkedin.com/in/christian-delao/"><i class="fa-brands fa-linkedin"></i></a>
+            <a href="https://github.com/christiandelao"><i class="fa-brands fa-github"></i></a>
+        </div>
+    </footer>
+</body>
+</html>

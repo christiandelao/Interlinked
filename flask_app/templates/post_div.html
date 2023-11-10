@@ -1,0 +1,87 @@
+{% extends "base.html" %} 
+{%block title %}Home{% endblock %}
+{% block content%}
+<h1 align="center">{%block header%} Posts{% endblock %}</h1>
+<div id="posts"> 
+    <div class="container-fluid">
+    {% for p in posts %} 
+    <div class="card border-dark">
+        <div class="card-header d-flex justify-content-between align-items-center"> 
+            <a href="/posts/{{p.user.username}}">{{p.user.username}}</a>
+            <div>
+                {{p.likes|length}}
+                {% if user.id in p.likes|map(attribute="author")|list %}
+                <a href="/like-post/{{p.id}}"><i class="fa-solid fa-thumbs-up"></i>
+                {% else %}
+                <a href="/like-post/{{p.id}}"><i class="fa-regular fa-thumbs-up"></i></a>
+                {% endif %}
+                {% if user.id == p.author %}
+                <div class="btn-group">
+                    <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-bs-toggle="dropdown"></button>
+                    <ul class="dropdown-menu">
+                        <li> <a href="/delete-post/{{p.id}}" class="dropdown-item">Delete</a></li>
+                        <li> <a href="/update-post/{{p.id}}" class="dropdown-item">Update </a></li>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="card-body ">
+            <div class="card-text">
+                <h4>{{p.title}} </h4> 
+            <br/>
+            <p>{{p.text}}</p>
+            <br/>
+            <div class="collapse" id="comments-{{p.id}}"> 
+                <div class="card">
+                    <div class="card-body" id="comments-expanded{{p.id}}">
+                        {% for comment in p.comments %}
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <a href="/posts/{{comment.user.username}}">{{comment.user.username}}
+                                </a>: {{comment.text}}
+                            </div>
+                            <div> 
+                                <small class="text-muted">{{comment.created_at}}</small>
+                                {% if user.id == comment.author or user.id == p.author %}                                 
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-bs-toggle="dropdown"></button>
+                                        <ul class="dropdown-menu">
+                                            <li> <a href="/delete-comment/{{comment.id}}" class="dropdown-item">Delete</a></li>
+                                        </ul>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <p class="card-text">
+            {% if p.comments|length > 0 %}
+            <a data-bs-toggle="collapse" href="#comments-{{p.id}}" role="button">
+                <small>View Comments</small>
+            </a>
+            {% else %}
+            <small class="text-muted">No comments</small>
+            {% endif %}
+            </p>
+            <form class="input-group mb-3" method="POST" action="/create-comment/{{p.id}}"> 
+                <input type="text" id="text" name="text" class="form-control" placeholder="Add a comment" />
+                <br/>
+                <button type="submit" class="btn btn-primary">Comment</button>
+                </form>
+            </div> 
+        </div>
+        <div class="card-footer text-muted">
+                {{p.created_at}}
+        </div>
+    </div>
+    <br/>{% endfor %} 
+    {% block footer %}
+    <div align="center">
+        <a href="/process-post"><button type="button" class="btn btn-primary btn-lg">Create a Post</button> </a>
+    </div>
+</div>
+</div>
+{% endblock %}
+{% endblock %}

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="../static/css/utilities.css">
+    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body>
+    <div class="navbar">
+        <div class="container flex">
+            <h1 class="logo">Interlinked</h1>
+            <nav>
+                <ul>
+                    {% if user.is_authenticated %}
+                    <li><a href="/home"><i class="fa-solid fa-house"></i></a></li>
+                    <li><a href="/logout"><i class="fa-solid fa-right-from-bracket"></i></a></li>
+                    <li><a href="/view-profile/{{user.id}}"><i class="fa-solid fa-user"></i></a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+            {% with messages = get_flashed_messages(with_categories=True)%}
+            {% if messages %} 
+            {% for category, m in messages %}
+            <div align="center" class="alert alert-danger alter-dismissible fade show" role="alert">
+                {{m}} 
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>  
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+        </div>
+    </div>
+    <section class="register">
+        <div class="register-text">
+            <h1>Update Account</h1>
+        </div>
+        <div class="register-form card">
+            <form method="POST">
+                <div class="form-group">
+                    <div class="img-sm">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                    <input type="text" id="first_name" name="first_name" class="form-control" value="{{current_user.first_name}}"/>
+                </div>
+                <div class="form-group">
+                    <div class="img-sm">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                    <input type="text" id="last_name" name="last_name" class="form-control" value="{{current_user.last_name}}"/>
+                </div>
+                <div class="form-group">
+                    <div class="img-sm">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                    <input type="text" id="username" name="username" class="form-control" value="{{current_user.username}}"/>
+                </div>
+                <div class="form-group">
+                    <div class="img-sm">
+                        <i class="fa-solid fa-at"></i>
+                    </div>
+                    <input type="text" id="email" name="email" class="form-control" value="{{current_user.email}}"/>
+                </div>
+                </div>
+                <input type="submit" value="Update" class="btn btn-primary">
+            </form>
+        </div>
+    </section>
+    <footer class="footer">
+        <div class="links">
+            <a href="https://www.linkedin.com/in/christian-delao/"><i class="fa-brands fa-linkedin"></i></a>
+            <a href="https://github.com/christiandelao"><i class="fa-brands fa-github"></i></a>
+        </div>
+    </footer>
+</body>
+</html>
