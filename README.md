@@ -10,7 +10,7 @@ Interlinked was my first post bootcamp project I built. I learned SQLAlchemy in 
 * Users are able to follow each other 
 
 # Video showcasing Interlinked
- <a href="https://youtu.be/baqrPulr-I8"> 
+ <a href=["https://youtu.be/baqrPulr-I8"](https://www.youtube.com/watch?v=baqrPulr-I8)> 
 
 # How to install the code 
 The easiest way is to view the video however if you would like to download the code here are the steps: 
